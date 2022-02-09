@@ -16,7 +16,7 @@ namespace PizzaToppings.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            HttpResponseMessage response = await client.GetAsync("https://localhost:7221/api/Values");
+            HttpResponseMessage response = await client.GetAsync("https://pizzatoppings.azurewebsites.net/api/Values");
            
             if (response.IsSuccessStatusCode)
             {
@@ -33,14 +33,17 @@ namespace PizzaToppings.Controllers
         public async Task<IActionResult> ConvertToListAsync()
         {
             List<string> Topping = new();
-            HttpResponseMessage response = await client.GetAsync("https://localhost:7221/api/Values");
+            HttpResponseMessage response = await client.GetAsync("https://pizzatoppings.azurewebsites.net/api/Values");
             if (response.IsSuccessStatusCode)
             {
                 string JSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ToppingsClass[]>(JSON);
                 foreach (var Top in result)
                 {
-                    Topping.Add(Top.toppings[0]);
+                    foreach (var Top1 in Top.toppings)
+                    {
+                        Topping.Add(Top1);
+                    }
                 }
                 var Lista = Topping.Distinct().ToList();
 
@@ -54,15 +57,19 @@ namespace PizzaToppings.Controllers
         {
             List<string> Topping = new();
             List<OccurrencesClass> Occurrences = new();
-            HttpResponseMessage response = await client.GetAsync("https://localhost:7221/api/Values");
+            HttpResponseMessage response = await client.GetAsync("https://pizzatoppings.azurewebsites.net/api/Values");
             if (response.IsSuccessStatusCode)
             {
                 string JSON = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ToppingsClass[]>(JSON);
                 foreach (var Top in result)
                 {
-                    Topping.Add(Top.toppings[0]);
+                    foreach(var Top1 in Top.toppings)
+                    {
+                        Topping.Add(Top1);
+                    }
                 }
+
                 var Lista = Topping.Distinct().ToList();
 
                 foreach(var Top in Lista)

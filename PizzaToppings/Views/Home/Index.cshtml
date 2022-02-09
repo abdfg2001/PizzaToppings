@@ -7,7 +7,12 @@
 <br />
 @foreach(var Topping in Model)
 {
-    <p>@Topping.toppings[0]</p>
+     <hr />
+    foreach (var Topping1 in Topping.toppings)
+    {
+      <p>@Topping1</p>
+    }
+    <hr />
 }
 
 

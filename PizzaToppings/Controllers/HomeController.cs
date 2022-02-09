@@ -17,7 +17,7 @@ namespace PizzaToppings.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             HttpResponseMessage response = await client.GetAsync("https://pizzatoppings.azurewebsites.net/api/Values");
-           
+
             if (response.IsSuccessStatusCode)
             {
                 string JSON = await response.Content.ReadAsStringAsync();
@@ -50,7 +50,7 @@ namespace PizzaToppings.Controllers
                 return View("ConvertToList", Lista);
             }
             else { return View("Error"); }
-            
+
         }
 
         public async Task<IActionResult> OccurrencesToListAsync()
@@ -64,7 +64,7 @@ namespace PizzaToppings.Controllers
                 var result = JsonConvert.DeserializeObject<ToppingsClass[]>(JSON);
                 foreach (var Top in result)
                 {
-                    foreach(var Top1 in Top.toppings)
+                    foreach (var Top1 in Top.toppings)
                     {
                         Topping.Add(Top1);
                     }
@@ -72,7 +72,7 @@ namespace PizzaToppings.Controllers
 
                 var Lista = Topping.Distinct().ToList();
 
-                foreach(var Top in Lista)
+                foreach (var Top in Lista)
                 {
                     var matchQuery = from word in Topping
                                      where word == Top
@@ -88,7 +88,7 @@ namespace PizzaToppings.Controllers
                             orderby user.Quantity descending
                             select user;
 
-                ViewData["Total"] =  enum1.Sum(s => s.Quantity);
+                ViewData["Total"] = enum1.Sum(s => s.Quantity);
 
                 return View("OccurrencesToList", enum1.ToList());
             }

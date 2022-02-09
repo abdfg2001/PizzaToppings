@@ -30,7 +30,22 @@ namespace PizzaToppings.Controllers
             }
         }
 
-        public async Task<IActionResult> ConvertToListAsync()
+        public async Task<IActionResult> PizzasJson()
+        {
+            HttpResponseMessage response = await client.GetAsync("https://pizzatoppings.azurewebsites.net/api/Values");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string JSON = await response.Content.ReadAsStringAsync();
+                return View("PizzasJson", JSON);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+            public async Task<IActionResult> ConvertToListAsync()
         {
             List<string> Topping = new();
             HttpResponseMessage response = await client.GetAsync("https://pizzatoppings.azurewebsites.net/api/Values");
